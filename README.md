@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/logo.svg" alt="GamePortal Logo" width="100" height="100">
+  <img src="public/logo.png" alt="GamePortal Logo" width="100" height="100">
   <h1>GamePortal</h1>
   <p>
     <strong>Your Gateway to Every Free Game</strong>

@@ -19,9 +19,6 @@ export const metadata: Metadata = {
   },
   description:
     "Discover, play, and share thousands of free games across all platforms. Your ultimate destination for gaming entertainment.",
-  icons: {
-    icon: "/favicon.svg",
-  },
 };
 
 export default function RootLayout({
