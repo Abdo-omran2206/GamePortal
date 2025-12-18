@@ -116,7 +116,7 @@ export default async function GameDetailsPage({ params }: PageProps) {
                 href={game.game_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-[#00C1FF] text-black font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_30px_rgba(0,193,255,0.4)] hover:shadow-[0_0_50px_rgba(0,193,255,0.6)] hover:scale-105 transition-all duration-300 mt-4"
+                className="inline-flex items-center gap-3 bg-[#00C1FF] text-black font-bold text-lg px-8 py-4 rounded-full shadow-[0_0_30px_rgba(0,193,255,0.4)] hover:shadow-[0_0_50px_rgba(0,193,255,0.6)] active:shadow-[0_0_20px_rgba(0,193,255,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 mt-4"
               >
                 <FaGamepad className="text-2xl" />
                 Play Now For Free
@@ -131,7 +131,7 @@ export default async function GameDetailsPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-12 items-start">
           {/* Left Column: Box Art & Extra Info */}
           <div className="space-y-8 lg:-mt-32 relative z-30">
-            <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-black border-2 border-white/10 transform hover:scale-[1.02] transition-transform duration-500">
+            <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-black border-2 border-white/10 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-500">
               <Image
                 src={game.thumbnail}
                 alt={game.title}
@@ -207,16 +207,16 @@ export default async function GameDetailsPage({ params }: PageProps) {
                   {game.screenshots.map((shot) => (
                     <div
                       key={shot.id}
-                      className="relative rounded-2xl overflow-hidden aspect-video group cursor-pointer border border-white/5 hover:border-[#00C1FF]/50 transition-colors"
+                      className="relative rounded-2xl overflow-hidden aspect-video group cursor-pointer border border-white/5 hover:border-[#00C1FF]/50 active:border-[#00C1FF] transition-all"
                     >
                       <Image
                         src={shot.image}
                         alt={`Screenshot ${shot.id}`}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110 group-active:scale-110"
                       />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
-                        <FaExternalLinkAlt className="text-[#00C1FF] text-3xl drop-shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
+                        <FaExternalLinkAlt className="text-[#00C1FF] text-3xl drop-shadow-lg transform translate-y-4 group-hover:translate-y-0 group-active:translate-y-0 transition-transform duration-300" />
                       </div>
                     </div>
                   ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { FaFilter, FaTimes } from "react-icons/fa";
 
 const CATEGORIES = [
@@ -69,60 +69,30 @@ export default function FilterSidebar() {
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Initialize state from URL params
-  const [platform, setPlatform] = useState(
-    searchParams.get("platform") || "all"
+  // Derive filter values directly from URL (Source of Truth)
+  const platform = searchParams.get("platform") || "all";
+  const category = searchParams.get("category") || "";
+  const sortBy = searchParams.get("sort-by") || "popularity";
+
+  // Helper to update URL params
+  const updateQuery = useCallback(
+    (key: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value && value !== "all" && value !== "") {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+      router.push(`/Gameportal?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router]
   );
-  const [category, setCategory] = useState(searchParams.get("category") || "");
-  const [sortBy, setSortBy] = useState(
-    searchParams.get("sort-by") || "popularity"
-  );
-
-  // Update URL when filters change
-  const updateFilters = useCallback(() => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (platform && platform !== "all") params.set("platform", platform);
-    else params.delete("platform");
-
-    if (category) params.set("category", category);
-    else params.delete("category");
-
-    if (sortBy) params.set("sort-by", sortBy);
-    else params.delete("sort-by");
-
-    router.push(`/Gameportal?${params.toString()}`);
-  }, [platform, category, sortBy, router, searchParams]);
-
-  // Sync state with URL if it changes externally
-  useEffect(() => {
-    setPlatform(searchParams.get("platform") || "all");
-    setCategory(searchParams.get("category") || "");
-    setSortBy(searchParams.get("sort-by") || "popularity");
-  }, [searchParams]);
-
-  // Apply filters effect
-  useEffect(() => {
-    // Debounce or just run on change? For simpler UX, running on change is fine for local state
-    // But we need to actually trigger the route update.
-    // Let's do it on dedicated Apply button or immediate effect?
-    // Immediate effect is better for responsiveness.
-    const params = new URLSearchParams();
-    if (platform && platform !== "all") params.set("platform", platform);
-    if (category) params.set("category", category);
-    if (sortBy) params.set("sort-by", sortBy);
-
-    // Only push if different from current
-    if (params.toString() !== searchParams.toString()) {
-      router.push(`/Gameportal?${params.toString()}`);
-    }
-  }, [platform, category, sortBy, router, searchParams]);
 
   return (
     <>
       {/* Mobile Toggle */}
       <button
-        className="md:hidden fixed bottom-6 right-6 z-50 bg-[#00C1FF] text-black p-4 rounded-full shadow-lg shadow-[#00C1FF]/30"
+        className="md:hidden fixed bottom-6 right-6 z-50 bg-[#00C1FF] text-black p-4 rounded-full shadow-lg shadow-[#00C1FF]/30 active:scale-95 transition-transform"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <FaTimes size={24} /> : <FaFilter size={24} />}
@@ -144,7 +114,10 @@ export default function FilterSidebar() {
         <div className="p-6 space-y-8">
           <div className="flex items-center justify-between md:hidden">
             <h2 className="text-xl font-bold text-white">Filters</h2>
-            <button onClick={() => setIsOpen(false)} className="text-gray-400">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-gray-400 active:scale-95 transition-transform"
+            >
               <FaTimes size={20} />
             </button>
           </div>
@@ -159,7 +132,7 @@ export default function FilterSidebar() {
                 {SORT_OPTIONS.map((option) => (
                   <label
                     key={option.value}
-                    className="flex items-center space-x-3 cursor-pointer group"
+                    className="flex items-center space-x-3 cursor-pointer group active:opacity-70"
                   >
                     <div
                       className={`
@@ -180,7 +153,7 @@ export default function FilterSidebar() {
                       name="sort"
                       value={option.value}
                       checked={sortBy === option.value}
-                      onChange={(e) => setSortBy(e.target.value)}
+                      onChange={() => updateQuery("sort-by", option.value)}
                       className="hidden"
                     />
                     <span
@@ -206,7 +179,7 @@ export default function FilterSidebar() {
                 {PLATFORMS.map((option) => (
                   <label
                     key={option.value}
-                    className="flex items-center space-x-3 cursor-pointer group"
+                    className="flex items-center space-x-3 cursor-pointer group active:opacity-70"
                   >
                     <div
                       className={`
@@ -227,7 +200,7 @@ export default function FilterSidebar() {
                       name="platform"
                       value={option.value}
                       checked={platform === option.value}
-                      onChange={(e) => setPlatform(e.target.value)}
+                      onChange={() => updateQuery("platform", option.value)}
                       className="hidden"
                     />
                     <span
@@ -251,9 +224,9 @@ export default function FilterSidebar() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => setCategory("")}
+                  onClick={() => updateQuery("category", "")}
                   className={`
-                     px-3 py-1.5 rounded-full text-xs font-medium transition-colors border
+                     px-3 py-1.5 rounded-full text-xs font-medium transition-all border active:scale-95
                      ${
                        category === ""
                          ? "bg-[#00C1FF] text-black border-[#00C1FF]"
@@ -266,9 +239,9 @@ export default function FilterSidebar() {
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat}
-                    onClick={() => setCategory(cat)}
+                    onClick={() => updateQuery("category", cat)}
                     className={`
-                      px-3 py-1.5 rounded-full text-xs font-medium transition-colors border capitalize
+                      px-3 py-1.5 rounded-full text-xs font-medium transition-all border capitalize active:scale-95
                       ${
                         category === cat
                           ? "bg-[#00C1FF] text-black border-[#00C1FF]"

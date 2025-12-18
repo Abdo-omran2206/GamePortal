@@ -162,7 +162,7 @@ export default async function Home() {
             </p>
             <Link
               href="/Gameportal"
-              className="bg-[#00C1FF] text-black font-semibold px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 hover:bg-[#00a3e0] hover:cursor-pointer hover:translate-y-[-2px] hover:drop-shadow-md transition-colors duration-300"
+              className="bg-[#00C1FF] text-black font-semibold px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 hover:bg-[#00a3e0] active:bg-[#008cc0] hover:cursor-pointer hover:translate-y-[-2px] active:translate-y-0 hover:drop-shadow-md transition-all duration-300 active:scale-95"
             >
               Get Started
             </Link>
@@ -187,11 +187,13 @@ export function AboutSection() {
       src: "4fc64e9ef528f65566204fbc6d4c2359.jpg",
       title: "Kratos",
       quote: "Boy… you are not ready",
+      color: "#b00000",
     },
     {
       src: "13b34007d510e82d5d65e6b953cb099d.jpg",
-      title: "Mortal Kombat",
+      title: "Scorpion",
       quote: "Finish Him!",
+      color: "#00C1FF",
     },
   ];
 
@@ -227,9 +229,12 @@ export function AboutSection() {
               shadow-lg 
               flex items-center gap-3 
               hover:bg-[#00a3e0] 
+              active:bg-[#008cc0]
               hover:shadow-[0_0_15px_rgb(0,193,255)]
               hover:translate-y-[-2px]
+              active:translate-y-0
               transition-all duration-300
+              active:scale-95
               cursor-pointer
             "
             >
@@ -259,6 +264,7 @@ export function AboutSection() {
                     overflow-hidden
                     transition-transform duration-300
                     hover:scale-105
+                    active:scale-105
                     ${index === 0 ? "-translate-y-6" : ""}
                   `}
                 >
@@ -272,11 +278,19 @@ export function AboutSection() {
                   />
 
                   {/* Overlay with Quote */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent transition-opacity duration-300 flex flex-col justify-end p-4">
                     <h3 className="text-white font-bold text-lg mb-1 truncate">
                       {img.title}
                     </h3>
-                    <p className="text-sm text-[#00C1FF] italic">{img.quote}</p>
+                    <p
+                      className="text-sm italic font-medium"
+                      style={{
+                        color: img.color,
+                        textShadow: `0 0 10px ${img.color}`,
+                      }}
+                    >
+                      &quot;{img.quote}&quot;
+                    </p>
                   </div>
                 </div>
               );

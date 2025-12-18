@@ -12,14 +12,14 @@ interface PortalGameCardProps {
 export default function PortalGameCard({ game }: PortalGameCardProps) {
   return (
     <Link href={`/GameDetails/${game.id}`} className="block group">
-      <div className="relative bg-[#1A1A1A] rounded-2xl overflow-hidden border border-white/5 transition-all duration-500 hover:border-[#00C1FF]/50 hover:shadow-[0_0_30px_rgba(0,193,255,0.15)] hover:-translate-y-2 h-full flex flex-col">
+      <div className="relative bg-[#1A1A1A] rounded-2xl overflow-hidden border border-white/5 transition-all duration-500 hover:border-[#00C1FF]/50 active:border-[#00C1FF] hover:shadow-[0_0_30px_rgba(0,193,255,0.15)] hover:-translate-y-2 active:-translate-y-0 h-full flex flex-col active:scale-95">
         {/* Image Container */}
         <div className="relative aspect-video overflow-hidden">
           <Image
             src={game.thumbnail}
             alt={game.title}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            className="object-cover transition-transform duration-700 group-hover:scale-110 group-active:scale-110"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
 
@@ -49,7 +49,7 @@ export default function PortalGameCard({ game }: PortalGameCardProps) {
           </div>
 
           <div className="flex justify-between items-start gap-2 mb-2">
-            <h3 className="text-xl font-bold text-white leading-tight group-hover:text-[#00C1FF] transition-colors line-clamp-1">
+            <h3 className="text-xl font-bold text-white leading-tight group-hover:text-[#00C1FF] group-active:text-[#00C1FF] transition-colors line-clamp-1">
               {game.title}
             </h3>
           </div>
@@ -71,8 +71,8 @@ export default function PortalGameCard({ game }: PortalGameCardProps) {
               </span>
             </div>
 
-            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#00C1FF] transition-colors duration-300">
-              <FaArrowRight className="text-white/50 group-hover:text-black w-3 h-3 transition-colors" />
+            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#00C1FF] group-active:bg-[#00C1FF] transition-colors duration-300">
+              <FaArrowRight className="text-white/50 group-hover:text-black group-active:text-black w-3 h-3 transition-colors" />
             </div>
           </div>
         </div>

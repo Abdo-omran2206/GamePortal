@@ -13,7 +13,7 @@ export default function GameSection({
   games,
   viewAllLink = "/Gameportal", // Default link
 }: {
-  title: any;
+  title: React.ReactNode;
   games: Game[];
   viewAllLink?: string;
 }) {
@@ -70,7 +70,7 @@ export function GameCard({ game }: GameCardProps) {
 
   return (
     <div
-      className="relative min-w-[450px] bg-[#161616] rounded-lg overflow-hidden group cursor-pointer transition-transform duration-300 hover:scale-[1.03]"
+      className="relative min-w-[450px] bg-[#161616] rounded-lg overflow-hidden group cursor-pointer transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98]"
       onClick={() => handlenavigate(game.id)}
     >
       <Image
@@ -92,7 +92,7 @@ export function GameCard({ game }: GameCardProps) {
         </p>
 
         {/* Hover content */}
-        <div className="opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-500 overflow-hidden">
+        <div className="opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-40 group-active:opacity-100 group-active:max-h-40 transition-all duration-500 overflow-hidden">
           <p className="text-xs text-gray-200 mt-2 line-clamp-2">
             {game.short_description}
           </p>

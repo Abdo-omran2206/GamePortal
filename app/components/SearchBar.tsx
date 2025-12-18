@@ -31,7 +31,7 @@ export default function SearchBar() {
       />
       <button
         onClick={handleSearch}
-        className="absolute right-2 top-1/2 -translate-y-1/2 bg-purple-600 hover:bg-purple-800 hover:cursor-pointer text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-purple-600 hover:bg-purple-800 active:bg-purple-900 hover:cursor-pointer text-white px-6 py-2 rounded-lg font-semibold transition-colors active:scale-95"
       >
         Search
       </button>
